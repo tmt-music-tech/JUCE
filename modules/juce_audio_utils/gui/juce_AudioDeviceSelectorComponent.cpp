@@ -606,7 +606,8 @@ private:
         if (box != nullptr)
         {
             auto* currentDevice = setup.manager->getCurrentAudioDevice();
-            auto index = type.getIndexOfDevice (currentDevice, isInput);
+            auto config = setup.manager->getAudioDeviceSetup();
+            auto index = (isInput ? config.inputDeviceName : config.outputDeviceName).isEmpty() ? -1 : type.getIndexOfDevice (currentDevice, isInput);
 
             box->setSelectedId (index < 0 ? index : index + 1, dontSendNotification);
 
